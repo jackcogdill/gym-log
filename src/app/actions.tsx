@@ -30,7 +30,9 @@ export async function connect(): Promise<ConnectionStatus> {
 }
 
 export async function getExercises() {
-  //
+  const client = await clientPromise;
+  const exercises = client.db().collection("exercises");
+  return await exercises.find().toArray();
 }
 
 export async function addExercise() {
