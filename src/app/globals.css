@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --fg: #000;
+  --bg: #fff;
+  --bg-url: url("../../public/dot-grid.webp");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg: #fff;
+    --bg: #111;
+    --bg-url: url("../../public/5-dots.webp");
+  }
+}
+
+body {
+  color: var(--fg);
+  background: var(--bg-url) var(--bg);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
