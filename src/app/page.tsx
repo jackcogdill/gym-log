@@ -4,7 +4,7 @@ export default function Home() {
       <input
         type="text"
         placeholder="Exercise"
-        className="w-full p-4 rounded border border-neutral-200 bg-neutral-100 outline-none dark:bg-neutral-900 dark:border-neutral-700"
+        className="w-full p-4 rounded border border-neutral-200 bg-neutral-50 outline-none dark:bg-neutral-900 dark:border-neutral-700"
       ></input>
     </main>
   );
