@@ -1,10 +1,7 @@
 "use server";
 
 import clientPromise from "../lib/mongodb";
-
-type ConnectionStatus = {
-  isConnected: boolean;
-};
+import { ConnectionStatus } from "../lib/types";
 
 export async function connect(): Promise<ConnectionStatus> {
   try {
@@ -18,21 +15,19 @@ export async function connect(): Promise<ConnectionStatus> {
     // Then you can execute queries against your database like so:
     // db.find({}) or any of the MongoDB Node Driver commands
 
-    return {
-      isConnected: true,
-    };
+    return ConnectionStatus.CONNECTED;
   } catch (e) {
     console.error(e);
-    return {
-      isConnected: false,
-    };
+    return ConnectionStatus.DISCONNECTED;
   }
 }
 
 export async function getExercises() {
+  console.log("fetching...");
   const client = await clientPromise;
   const exercises = client.db().collection("exercises");
-  return await exercises.find().toArray();
+  const result = await exercises.find().toArray();
+  console.log("result:", result);
 }
 
 export async function addExercise() {
