@@ -38,7 +38,7 @@ async function signIn() {
 
 const mainClassName = "min-h-screen p-20";
 const buttonClassName =
-  "p-1 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700";
+  "py-1 px-2 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700";
 
 export default function Home() {
   const [ready, setReady] = useState(false);
