@@ -41,14 +41,24 @@ const buttonClassName =
   "p-1 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700";
 
 export default function Home() {
+  const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
+    auth.authStateReady().then(() => setReady(true));
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
     });
     return () => unsubscribe();
   }, []);
+
+  if (!ready) {
+    return (
+      <main className={mainClassName}>
+        <p>Loading...</p>
+      </main>
+    );
+  }
 
   if (!user) {
     return (
