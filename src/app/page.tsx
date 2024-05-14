@@ -10,7 +10,6 @@ import {
   AuthError,
 } from "firebase/auth";
 
-// Firebase
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -25,23 +24,21 @@ const auth = getAuth(app);
 async function signIn() {
   try {
     const result = await signInWithPopup(auth, new GoogleAuthProvider());
-    // This gives you a Google Access Token. You can use it to access the Google API.
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
-    // The signed-in user info.
     const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
   } catch (e) {
     const error = e as AuthError;
-    // Handle Errors here.
     const errorCode = error.code;
     const errorMessage = error.message;
-    // The email of the user's account used.
     const email = error.customData.email;
-    // The AuthCredential type that was used.
     const credential = GoogleAuthProvider.credentialFromError(error);
   }
 }
+
+const mainClassName = "min-h-screen p-20";
+const buttonClassName =
+  "p-1 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700";
 
 export default function Home() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -59,19 +56,21 @@ export default function Home() {
 
   if (!isSignedIn) {
     return (
-      <div>
-        <h1>My App</h1>
-        <p>Please sign-in:</p>
-        <a onClick={() => signIn()}>Sign-in</a>
-      </div>
+      <main className={mainClassName}>
+        <p>Please sign in:</p>
+        <button className={buttonClassName} onClick={() => signIn()}>
+          Sign In
+        </button>
+      </main>
     );
   }
 
   return (
-    <div>
-      <h1>My App</h1>
-      <p>Welcome {displayName}! You are now signed-in!</p>
-      <a onClick={() => auth.signOut()}>Sign-out</a>
-    </div>
+    <main className={mainClassName}>
+      <p>Welcome {displayName}!</p>
+      <button className={buttonClassName} onClick={() => auth.signOut()}>
+        Sign Out
+      </button>
+    </main>
   );
 }
