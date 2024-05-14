@@ -48,7 +48,7 @@ export default function Home() {
       setUser(user);
     });
     return () => unsubscribe();
-  });
+  }, []);
 
   if (!user) {
     return (
