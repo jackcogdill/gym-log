@@ -8,6 +8,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   AuthError,
+  User,
 } from "firebase/auth";
 
 const app = initializeApp({
@@ -26,7 +27,6 @@ async function signIn() {
     const result = await signInWithPopup(auth, new GoogleAuthProvider());
     const credential = GoogleAuthProvider.credentialFromResult(result);
     const token = credential?.accessToken;
-    const user = result.user;
   } catch (e) {
     const error = e as AuthError;
     const errorCode = error.code;
@@ -41,20 +41,16 @@ const buttonClassName =
   "p-1 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800";
 
 export default function Home() {
-  const [isSignedIn, setSignedIn] = useState(false);
-  const [displayName, setDisplayName] = useState("Guest");
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setSignedIn(!!user);
-      if (user?.displayName) {
-        setDisplayName(user.displayName);
-      }
+      setUser(user);
     });
     return () => unsubscribe();
   });
 
-  if (!isSignedIn) {
+  if (!user) {
     return (
       <main className={mainClassName}>
         <p>Please sign in:</p>
@@ -67,7 +63,7 @@ export default function Home() {
 
   return (
     <main className={mainClassName}>
-      <p>Welcome {displayName}!</p>
+      <p>Welcome {user.displayName}!</p>
       <button className={buttonClassName} onClick={() => auth.signOut()}>
         Sign Out
       </button>
