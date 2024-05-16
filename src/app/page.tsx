@@ -10,6 +10,7 @@ import {
   AuthError,
   User,
 } from "firebase/auth";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,6 +22,7 @@ const app = initializeApp({
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 async function signIn() {
   try {
@@ -40,6 +42,17 @@ const mainClassName = "min-h-screen p-20";
 const buttonClassName =
   "py-1 px-2 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700";
 
+async function addTestDoc(user: User) {
+  try {
+    const docRef = await addDoc(collection(db, "users", user.uid, "info"), {
+      email: user.email,
+    });
+    console.log("Document written with ID:", docRef.id);
+  } catch (e) {
+    console.error("Error adding document:", e);
+  }
+}
+
 export default function Home() {
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -48,6 +61,9 @@ export default function Home() {
     auth.authStateReady().then(() => setReady(true));
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      if (user) {
+        addTestDoc(user);
+      }
     });
     return () => unsubscribe();
   }, []);
