@@ -51,7 +51,7 @@ async function addTestDoc(user: User) {
   }
 }
 
-export default function Home() {
+export default function Page() {
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<User | null>(null);
 

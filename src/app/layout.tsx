@@ -17,7 +17,7 @@ const themeScript = `
     };
 
     setTheme(themeQuery.matches ? "dark" : "light");
-  })()
+  })();
 `;
 
 export default function RootLayout({
