@@ -79,7 +79,7 @@ export default function Page() {
       <main>
         <p>Please sign in:</p>
         <Button variant="primary" onClick={() => signIn()}>
-          Sign In
+          Sign In with Google
         </Button>
       </main>
     );
