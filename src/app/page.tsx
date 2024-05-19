@@ -1,6 +1,8 @@
 "use client";
 
+import "./styles.scss";
 import { useState, useEffect } from "react";
+import Button from "react-bootstrap/Button";
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -38,10 +40,6 @@ async function signIn() {
   }
 }
 
-const mainClassName = "min-h-screen p-20";
-const buttonClassName =
-  "py-1 px-2 rounded border bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-700";
-
 async function addTestDoc(user: User) {
   try {
     const docRef = await addDoc(collection(db, "users", user.uid, "info"), {
@@ -70,7 +68,7 @@ export default function Home() {
 
   if (!ready) {
     return (
-      <main className={mainClassName}>
+      <main>
         <p>Loading...</p>
       </main>
     );
@@ -78,21 +76,21 @@ export default function Home() {
 
   if (!user) {
     return (
-      <main className={mainClassName}>
+      <main>
         <p>Please sign in:</p>
-        <button className={buttonClassName} onClick={() => signIn()}>
+        <Button variant="primary" onClick={() => signIn()}>
           Sign In
-        </button>
+        </Button>
       </main>
     );
   }
 
   return (
-    <main className={mainClassName}>
+    <main>
       <p>Welcome {user.displayName}!</p>
-      <button className={buttonClassName} onClick={() => auth.signOut()}>
+      <Button variant="secondary" onClick={() => auth.signOut()}>
         Sign Out
-      </button>
+      </Button>
     </main>
   );
 }
