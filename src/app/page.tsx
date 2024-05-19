@@ -66,24 +66,29 @@ export default function Page() {
     return () => unsubscribe();
   }, []);
 
-  if (!ready) {
-    return <p>Loading...</p>;
-  }
+  if (!ready) return;
 
   if (!user) {
     return (
-      <Button variant="primary" onClick={() => signIn()}>
-        Sign In with Google
-      </Button>
+      <div className="text-center">
+        <Button variant="primary" onClick={() => signIn()}>
+          Sign In with Google
+        </Button>
+      </div>
     );
   }
 
   return (
-    <>
-      <p>Welcome {user.displayName}!</p>
-      <Button variant="secondary" onClick={() => auth.signOut()}>
+    <div className="d-flex align-items-center justify-content-end">
+      {user.displayName}
+      <Button
+        variant="secondary"
+        size="sm"
+        className="ms-2"
+        onClick={() => auth.signOut()}
+      >
         Sign Out
       </Button>
-    </>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
 @import "bootstrap/scss/bootstrap";
 
 body {
-  background-image: url("../../public/dot-grid.webp");
+  background-image: url("../../public/so-white.png");
 }
 
 @include color-mode(dark) {
   body {
-    background-image: url("../../public/5-dots.webp");
+    background-image: url("../../public/mosaic.png");
   }
 }
