@@ -29,7 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeScript }}></script>
-        {children}
+        <main className="container py-4">{children}</main>
       </body>
     </html>
   );

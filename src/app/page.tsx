@@ -67,30 +67,23 @@ export default function Page() {
   }, []);
 
   if (!ready) {
-    return (
-      <main>
-        <p>Loading...</p>
-      </main>
-    );
+    return <p>Loading...</p>;
   }
 
   if (!user) {
     return (
-      <main>
-        <p>Please sign in:</p>
-        <Button variant="primary" onClick={() => signIn()}>
-          Sign In with Google
-        </Button>
-      </main>
+      <Button variant="primary" onClick={() => signIn()}>
+        Sign In with Google
+      </Button>
     );
   }
 
   return (
-    <main>
+    <>
       <p>Welcome {user.displayName}!</p>
       <Button variant="secondary" onClick={() => auth.signOut()}>
         Sign Out
       </Button>
-    </main>
+    </>
   );
 }
