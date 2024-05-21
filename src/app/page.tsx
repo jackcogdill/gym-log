@@ -70,7 +70,8 @@ export default function Page() {
 
   if (!user) {
     return (
-      <div className="text-center">
+      <div className="h-75 d-flex flex-column align-items-center justify-content-center gap-2">
+        <h1>Gym Log</h1>
         <Button variant="primary" onClick={() => signIn()}>
           Sign In with Google
         </Button>

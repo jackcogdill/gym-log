@@ -26,10 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="h-100">
+      <body className="h-100">
         <script dangerouslySetInnerHTML={{ __html: themeScript }}></script>
-        <main className="container py-4">{children}</main>
+        <main className="h-100 container py-4">{children}</main>
       </body>
     </html>
   );
