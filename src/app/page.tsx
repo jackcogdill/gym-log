@@ -60,12 +60,7 @@ export default function Page() {
 
   useEffect(() => {
     auth.authStateReady().then(() => setReady(true));
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      if (user) {
-        addTestDoc(user);
-      }
-    });
+    const unsubscribe = onAuthStateChanged(auth, (user) => setUser(user));
     return () => unsubscribe();
   }, []);
 
