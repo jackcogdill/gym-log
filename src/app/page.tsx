@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { isMobile } from "react-device-detect";
+import Search from "./search";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -78,16 +79,21 @@ export default function Page() {
   }
 
   return (
-    <div className="d-flex align-items-center justify-content-end">
-      {user.displayName}
-      <Button
-        variant="secondary"
-        size="sm"
-        className="ms-2"
-        onClick={() => auth.signOut()}
-      >
-        Sign Out
-      </Button>
-    </div>
+    <>
+      <div className="d-flex align-items-center justify-content-end">
+        {user.displayName}
+        <Button
+          variant="secondary"
+          size="sm"
+          className="ms-2"
+          onClick={() => auth.signOut()}
+        >
+          Sign Out
+        </Button>
+      </div>
+      <div className="h-50 d-flex align-items-center justify-content-center ">
+        <Search />
+      </div>
+    </>
   );
 }
