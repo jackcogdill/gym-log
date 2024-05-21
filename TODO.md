@@ -2,7 +2,7 @@
 
 ### priority
 
-- [ ] Use redirect sign in on mobile
+- [x] Use redirect sign in on mobile
 
 ### other
 

@@ -9,10 +9,12 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   AuthError,
   User,
 } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { isMobile } from "react-device-detect";
 
 const app = initializeApp({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,15 +30,16 @@ const db = getFirestore(app);
 
 async function signIn() {
   try {
-    const result = await signInWithPopup(auth, new GoogleAuthProvider());
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
+    if (isMobile) {
+      await signInWithRedirect(auth, new GoogleAuthProvider());
+    } else {
+      await signInWithPopup(auth, new GoogleAuthProvider());
+    }
   } catch (e) {
     const error = e as AuthError;
     const errorCode = error.code;
     const errorMessage = error.message;
-    const email = error.customData.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
+    console.log(errorCode, errorMessage);
   }
 }
 
