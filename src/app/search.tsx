@@ -1,8 +1,9 @@
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
+import Link from "next/link";
 import { useState } from "react";
 
-export default function Search({ names }: { names: string[] }) {
+export default function Search({ exercises }: { exercises: string[] }) {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
 
@@ -24,15 +25,17 @@ export default function Search({ names }: { names: string[] }) {
       />
       <Dropdown show={show}>
         <Dropdown.Menu className="w-100 mt-2">
-          {Array.from(names.entries()).map(([i, name]) => (
-            <Dropdown.Item eventKey={i}>{name}</Dropdown.Item>
+          {exercises.map((name) => (
+            <Dropdown.Item as={Link} href={`/exercises/${name}`}>
+              {name}
+            </Dropdown.Item>
           ))}
-          {value && !names.includes(value) ? (
+          {value && !exercises.includes(value) ? (
             <>
               <Dropdown.Divider />
-              <Dropdown.Item
-                eventKey={names.length}
-              >{`＋ ${value}`}</Dropdown.Item>
+              <Dropdown.Item as={Link} href={`/exercises/${value}`}>
+                {`＋ ${value}`}
+              </Dropdown.Item>
             </>
           ) : null}
         </Dropdown.Menu>

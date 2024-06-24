@@ -109,7 +109,7 @@ export default function Page() {
         </Button>
       </div>
       <div className="h-50 d-flex align-items-center justify-content-center ">
-        <Search names={["bench", "squat", "row"]} />
+        <Search exercises={["bench", "squat", "row"]} />
       </div>
     </>
   );
