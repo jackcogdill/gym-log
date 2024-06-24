@@ -46,9 +46,14 @@ async function signIn() {
 
 async function addTestDoc(user: User) {
   try {
-    const docRef = await addDoc(collection(db, "users", user.uid, "info"), {
-      email: user.email,
-    });
+    const docRef = await addDoc(
+      collection(db, "users", user.uid, "exercises"),
+      {
+        name: "test",
+        weight: 10,
+        reps: [9, 8, 7],
+      },
+    );
     console.log("Document written with ID:", docRef.id);
   } catch (e) {
     console.error("Error adding document:", e);
@@ -104,7 +109,7 @@ export default function Page() {
         </Button>
       </div>
       <div className="h-50 d-flex align-items-center justify-content-center ">
-        <Search />
+        <Search names={["bench", "squat", "row"]} />
       </div>
     </>
   );
