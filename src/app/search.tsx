@@ -25,15 +25,19 @@ export default function Search({ exercises }: { exercises: string[] }) {
       />
       <Dropdown show={show}>
         <Dropdown.Menu className="w-100 mt-2">
-          {exercises.map((name) => (
-            <Dropdown.Item as={Link} href={`/exercises/${name}`}>
+          {Array.from(exercises.entries()).map(([i, name]) => (
+            <Dropdown.Item as={Link} href={`/exercises/${name}`} key={i}>
               {name}
             </Dropdown.Item>
           ))}
           {value && !exercises.includes(value) ? (
             <>
               <Dropdown.Divider />
-              <Dropdown.Item as={Link} href={`/exercises/${value}`}>
+              <Dropdown.Item
+                as={Link}
+                href={`/exercises/${value}`}
+                key={exercises.length}
+              >
                 {`＋ ${value}`}
               </Dropdown.Item>
             </>

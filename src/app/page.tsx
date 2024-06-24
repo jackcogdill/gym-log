@@ -87,7 +87,7 @@ export default function Page() {
         <div className="h-25"></div>
         <div className="d-flex flex-column align-items-center gap-2">
           <h1>Gym Log</h1>
-          <Button variant="primary" onClick={() => signIn()}>
+          <Button variant="primary" onClick={signIn}>
             Sign In with Google
           </Button>
         </div>
