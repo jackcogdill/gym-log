@@ -1,4 +1,6 @@
+import Main from "./main";
 import type { Metadata } from "next";
+import { AuthProvider } from "../lib/context/auth";
 
 export const metadata: Metadata = {
   title: "Gym Log",
@@ -29,7 +31,9 @@ export default function RootLayout({
     <html lang="en" className="h-100">
       <body className="h-100">
         <script dangerouslySetInnerHTML={{ __html: themeScript }}></script>
-        <main className="h-100 container py-4">{children}</main>
+        <AuthProvider>
+          <Main>{children}</Main>
+        </AuthProvider>
       </body>
     </html>
   );
