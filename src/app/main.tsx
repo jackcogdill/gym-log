@@ -3,7 +3,7 @@
 import "./styles.scss";
 import Button from "react-bootstrap/Button";
 import Header from "./header";
-import { signIn } from "../lib/firebase/actions";
+import { signIn } from "../lib/firebase/auth";
 import { useAuth } from "../lib/context/auth";
 
 export default function Main({
