@@ -3,9 +3,11 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Search({ exercises }: { exercises: string[] }) {
+  const router = useRouter();
   const [exercise, setExercise] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -13,6 +15,11 @@ export default function Search({ exercises }: { exercises: string[] }) {
     const { value } = e.target;
     setExercise(value);
     setShowDropdown(!!value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/exercises/${exercise}`);
   };
 
   const items = [];
@@ -37,7 +44,7 @@ export default function Search({ exercises }: { exercises: string[] }) {
   }
 
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <Form.Control
         type="text"
         size="lg"
