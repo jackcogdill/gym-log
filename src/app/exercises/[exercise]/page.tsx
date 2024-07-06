@@ -1,3 +1,10 @@
+import Header from "../../header";
+
 export default function Page({ params }: { params: { exercise: string } }) {
-  return <div>Hello, {params.exercise}</div>;
+  return (
+    <>
+      <Header />
+      <div>Hello, {params.exercise}</div>
+    </>
+  );
 }

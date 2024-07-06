@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "react-bootstrap/Button";
 import { useAuth } from "../lib/context/auth";
 import { signOut } from "../lib/firebase/auth";
