@@ -7,8 +7,12 @@ export default function DashboardLayout({
 }>) {
   return (
     <>
-      <Header />
-      {children}
+      <div className="mb-5">
+        <Header />
+      </div>
+      <div className="d-flex align-items-center justify-content-center">
+        {children}
+      </div>
     </>
   );
 }

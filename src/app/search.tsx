@@ -51,7 +51,6 @@ export default function Search({ exercises }: { exercises: string[] }) {
         htmlSize={28}
         placeholder="Exercise"
         onChange={onChange}
-        value={exercise}
       />
       <Dropdown show={showDropdown}>
         <Dropdown.Menu className="w-100 mt-2">{items}</Dropdown.Menu>
