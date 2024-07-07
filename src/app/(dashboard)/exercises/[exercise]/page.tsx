@@ -48,16 +48,20 @@ export default function Page({ params }: { params: { exercise: string } }) {
 
   // TODO: validation
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const { currentTarget } = e;
     e.preventDefault();
 
-    await logExercise(user!, {
+    const success = await logExercise(user!, {
       exercise: params.exercise,
       weight,
       sets: sets.filter(Number.isInteger),
       note,
     });
 
-    // TODO: reset form
+    // Reset form
+    if (success) {
+      currentTarget.reset();
+    }
   };
 
   return (

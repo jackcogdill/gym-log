@@ -11,15 +11,17 @@ interface ExerciseLog {
   note: string;
 }
 
-export async function logExercise(user: User, log: ExerciseLog) {
+/** @returns success */
+export async function logExercise(
+  user: User,
+  log: ExerciseLog,
+): Promise<boolean> {
   console.log('log exercise', log);
   try {
-    const doc = await addDoc(
-      collection(db, 'users', user.uid, 'exercises'),
-      log,
-    );
-    console.log('Document written with ID:', doc.id);
+    await addDoc(collection(db, 'users', user.uid, 'exercises'), log);
+    return true;
   } catch (e) {
     console.error('Error adding document:', e);
+    return false;
   }
 }
