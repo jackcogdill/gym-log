@@ -4,10 +4,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
+import { logExercise } from "../../../../lib/db";
+import { useAuth } from "../../../../lib/context/auth";
 
 const defaultWeight = 0; // TODO: read from previous log entry
 
 export default function Page({ params }: { params: { exercise: string } }) {
+  const { user } = useAuth();
   const [weight, setWeight] = useState(defaultWeight);
   const [sets, setSets] = useState<number[]>([]);
   const [note, setNote] = useState("");
@@ -44,12 +47,17 @@ export default function Page({ params }: { params: { exercise: string } }) {
   };
 
   // TODO: validation
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("weight", weight);
-    console.log("sets", sets.filter(Number.isInteger));
-    console.log("note", note);
+    await logExercise(user!, {
+      exercise: params.exercise,
+      weight,
+      sets: sets.filter(Number.isInteger),
+      note,
+    });
+
+    // TODO: reset form
   };
 
   return (
