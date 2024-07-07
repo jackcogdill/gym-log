@@ -14,14 +14,17 @@ export default function Page({ params }: { params: { exercise: string } }) {
 
   const setInputs = [];
   for (let i = 0; i < sets.length + 1; ++i) {
+    const id = `set-units-${i}`;
     setInputs.push(
       <InputGroup className="mb-3">
         <Form.Control
           inputMode="numeric"
           pattern="[0-9]*"
           type="text"
+          aria-describedby={id}
           onChange={(e) => onChangeSet(i, e.target.value)}
         />
+        <InputGroup.Text id={id}>reps</InputGroup.Text>
       </InputGroup>,
     );
   }
