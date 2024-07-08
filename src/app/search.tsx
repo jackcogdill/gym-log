@@ -12,7 +12,7 @@ export default function Search() {
   const { user } = useAuth();
   const router = useRouter();
   const [exercises, setExercises] = useState<string[]>([]);
-  const [exercise, setExercise] = useState("");
+  const [query, setQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
@@ -21,33 +21,29 @@ export default function Search() {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setExercise(value);
+    setQuery(value);
     setShowDropdown(!!value);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/exercises/${exercise}`);
+    router.push(`/exercises/${query}`);
   };
 
   // TODO: fuzzy search
   const items = [];
-  for (const [i, name] of Array.from(exercises.entries())) {
+  for (const exercise of exercises) {
     items.push(
-      <Dropdown.Item as={Link} href={`/exercises/${name}`} key={i}>
-        {name}
+      <Dropdown.Item as={Link} href={`/exercises/${exercise}`} key={exercise}>
+        {exercise}
       </Dropdown.Item>,
     );
   }
-  if (exercise && !exercises.includes(exercise)) {
-    items.push(<Dropdown.Divider />);
+  if (query && !exercises.includes(query)) {
+    items.push(<Dropdown.Divider key={"__divider"} />);
     items.push(
-      <Dropdown.Item
-        as={Link}
-        href={`/exercises/${exercise}`}
-        key={exercises.length}
-      >
-        {`＋ ${exercise}`}
+      <Dropdown.Item as={Link} href={`/exercises/${query}`} key={query}>
+        {`＋ ${query}`}
       </Dropdown.Item>,
     );
   }
