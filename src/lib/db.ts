@@ -9,6 +9,7 @@ interface ExerciseLog {
   weight: number;
   sets: number[];
   note: string;
+  timestamp: number;
 }
 
 /** @returns success */
