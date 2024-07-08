@@ -2,7 +2,6 @@
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import { useState } from "react";
 import { logExercise } from "../../../../lib/db";
 import { useAuth } from "../../../../lib/context/auth";
@@ -55,32 +54,29 @@ export default function Page({ params }: { params: { exercise: string } }) {
       <h1>{params.exercise}</h1>
       <Form noValidate onSubmit={onSubmit}>
         <Form.Label htmlFor="weight">Weight</Form.Label>
-        <InputGroup className="mb-3">
-          <Form.Control
-            id="weight"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            type="text"
-            value={weight}
-            placeholder={`${defaultWeight}`}
-            aria-describedby="weight-units"
-            onChange={(e) => setWeight(e.target.value)}
-          />
-          <InputGroup.Text id="weight-units">lbs</InputGroup.Text>
-        </InputGroup>
+        <Form.Control
+          className="mb-3"
+          id="weight"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          type="text"
+          value={weight}
+          placeholder={defaultWeight.toString()}
+          onChange={(e) => setWeight(e.target.value)}
+        />
 
         <Form.Group className="mb-3">
           <Form.Label>Sets</Form.Label>
           {sets.map((set, i) => (
-            <InputGroup className="mb-3" key={set.id}>
-              <Form.Control
-                inputMode="numeric"
-                pattern="[0-9]*"
-                type="text"
-                value={set.value}
-                onChange={(e) => onChangeSet(i, e.target.value)}
-              />
-            </InputGroup>
+            <Form.Control
+              className="mb-3"
+              key={set.id}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              type="text"
+              value={set.value}
+              onChange={(e) => onChangeSet(i, e.target.value)}
+            />
           ))}
         </Form.Group>
 
