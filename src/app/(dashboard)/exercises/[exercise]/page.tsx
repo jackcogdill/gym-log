@@ -7,13 +7,12 @@ import { useState } from "react";
 import { logExercise } from "../../../../lib/db";
 import { useAuth } from "../../../../lib/context/auth";
 
-const defaultWeight = 0; // TODO: read from previous log entry
-
+const defaultWeight = 135; // TODO: read from previous log entry
 const createSet = () => ({ id: Date.now(), value: "" });
 
 export default function Page({ params }: { params: { exercise: string } }) {
   const { user } = useAuth();
-  const [weight, setWeight] = useState(defaultWeight);
+  const [weight, setWeight] = useState("");
   const [sets, setSets] = useState([createSet()]);
   const [note, setNote] = useState("");
 
@@ -29,19 +28,13 @@ export default function Page({ params }: { params: { exercise: string } }) {
     setSets(newSets);
   };
 
-  const onChangeWeight = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setWeight(Number.parseInt(value));
-  };
-
   // TODO: validation
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    const { currentTarget } = e;
     e.preventDefault();
 
     const success = await logExercise(user!, {
       exercise: params.exercise,
-      weight,
+      weight: Number.parseInt(weight),
       sets: sets
         .map(({ value }) => Number.parseInt(value))
         .filter(Number.isInteger),
@@ -51,8 +44,9 @@ export default function Page({ params }: { params: { exercise: string } }) {
 
     // Reset form
     if (success) {
+      setWeight("");
       setSets([createSet()]);
-      currentTarget.reset();
+      setNote("");
     }
   };
 
@@ -67,9 +61,10 @@ export default function Page({ params }: { params: { exercise: string } }) {
             inputMode="numeric"
             pattern="[0-9]*"
             type="text"
+            value={weight}
             placeholder={`${defaultWeight}`}
             aria-describedby="weight-units"
-            onChange={onChangeWeight}
+            onChange={(e) => setWeight(e.target.value)}
           />
           <InputGroup.Text id="weight-units">lbs</InputGroup.Text>
         </InputGroup>
@@ -94,6 +89,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
           <Form.Control
             id="note"
             type="text"
+            value={note}
             onChange={(e) => setNote(e.target.value)}
           />
         </Form.Group>
