@@ -3,8 +3,13 @@
 ### priority
 
 - [x] Use redirect sign in on mobile
-- [ ] Add flat db table for all exercise logs
-- [ ] Add note per exercise
+- [x] Add flat db table for all exercise logs
+- [x] Add note per exercise
+- [ ] Integrate search + db
+- [ ] Add exercise history table
+- [ ] Productionize
+  - [ ] Create separate test/prod configs with different DBs
+- [ ] Add import from Google sheets
 
 ### other
 
