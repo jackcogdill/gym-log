@@ -13,4 +13,6 @@
 
 ### other
 
+- [ ] Make exercises title case (or separate display name)
+- [ ] Handle exercise names with punctuation
 - [ ] Add firebase analytics
