@@ -5,7 +5,7 @@
 - [x] Use redirect sign in on mobile
 - [x] Add flat db table for all exercise logs
 - [x] Add note per exercise
-- [ ] Integrate search + db
+- [x] Integrate search + db
 - [ ] Add exercise history table
 - [ ] Productionize
   - [ ] Create separate test/prod configs with different DBs
@@ -13,4 +13,4 @@
 
 ### other
 
-- [ ] Add (firebase?) analytics
+- [ ] Add firebase analytics
