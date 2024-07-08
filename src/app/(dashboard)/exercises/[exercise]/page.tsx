@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
 
     const success = await logExercise(user!, {
       exercise: params.exercise,
-      weight: Number.parseInt(weight),
+      weight: weight === "" ? defaultWeight : Number.parseInt(weight),
       sets: sets
         .map(({ value }) => Number.parseInt(value))
         .filter(Number.isInteger),
