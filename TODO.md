@@ -11,8 +11,11 @@
   - [ ] Create separate test/prod configs with different DBs
 - [ ] Add import from Google sheets
 
-### other
+### backlog
 
 - [ ] Make exercises title case (or separate display name)
 - [ ] Handle exercise names with punctuation
 - [ ] Add firebase analytics
+- [ ] Add GitHub inspired calendar view of exercise frequency
+  - [ ] Dashboard (combined)
+  - [ ] Individual exercises
