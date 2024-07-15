@@ -6,7 +6,6 @@ import { useState } from "react";
 import { logExercise } from "../../../../lib/db";
 import { useAuth } from "../../../../lib/context/auth";
 
-const defaultWeight = 135; // TODO: read from previous log entry
 const createSet = () => ({ id: Date.now(), value: "" });
 
 export default function Page({ params }: { params: { exercise: string } }) {
@@ -14,6 +13,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
   const [weight, setWeight] = useState("");
   const [sets, setSets] = useState([createSet()]);
   const [note, setNote] = useState("");
+  const [validated, setValidated] = useState(false);
 
   const onChangeSet = (index: number, value: string) => {
     const newSets = [...sets];
@@ -27,16 +27,22 @@ export default function Page({ params }: { params: { exercise: string } }) {
     setSets(newSets);
   };
 
-  // TODO: validation
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const parsedWeight = Number.parseInt(weight);
+    const parsedSets = sets
+      .map(({ value }) => Number.parseInt(value))
+      .filter(Number.isInteger);
+
+    const valid = Number.isInteger(parsedWeight) && parsedSets.length > 0;
+    setValidated(!valid);
+    if (!valid) return;
+
     const success = await logExercise(user!, {
       exercise: params.exercise,
-      weight: weight ? Number.parseInt(weight) : defaultWeight,
-      sets: sets
-        .map(({ value }) => Number.parseInt(value))
-        .filter(Number.isInteger),
+      weight: parsedWeight,
+      sets: parsedSets,
       note,
       timestamp: Date.now(),
     });
@@ -52,23 +58,23 @@ export default function Page({ params }: { params: { exercise: string } }) {
   return (
     <div>
       <h1>{params.exercise}</h1>
-      <Form noValidate onSubmit={onSubmit}>
-        <Form.Label htmlFor="weight">Weight</Form.Label>
-        <Form.Control
-          className="mb-3"
-          id="weight"
-          inputMode="numeric"
-          pattern="[0-9]*"
-          type="text"
-          value={weight}
-          placeholder={defaultWeight.toString()}
-          onChange={(e) => setWeight(e.target.value)}
-        />
-
+      <Form noValidate validated={validated} onSubmit={onSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Weight</Form.Label>
+          <Form.Control
+            required
+            inputMode="numeric"
+            pattern="[0-9]*"
+            type="text"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+          />
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Sets</Form.Label>
           {sets.map((set, i) => (
             <Form.Control
+              required={sets.length == 1 || i < sets.length - 1}
               className="mb-3"
               key={set.id}
               inputMode="numeric"
@@ -79,7 +85,6 @@ export default function Page({ params }: { params: { exercise: string } }) {
             />
           ))}
         </Form.Group>
-
         <Form.Group className="mb-3">
           <Form.Label>Note</Form.Label>
           <Form.Control
@@ -89,7 +94,6 @@ export default function Page({ params }: { params: { exercise: string } }) {
             onChange={(e) => setNote(e.target.value)}
           />
         </Form.Group>
-
         <Button variant="primary" type="submit" className="w-100">
           Log
         </Button>

@@ -28,13 +28,13 @@ export async function logExercise(
     const exercises = collection(db, 'users', user.uid, 'exercises');
     const metadata = doc(db, 'users', user.uid, 'metadata', 'exercises');
 
-    const addPromise = addDoc(exercises, log);
-    const setPromise = setDoc(
+    const logPromise = addDoc(exercises, log);
+    const metadataPromise = setDoc(
       metadata,
       { names: arrayUnion(log.exercise) },
       { merge: true },
     );
-    await Promise.all([addPromise, setPromise]);
+    await Promise.all([logPromise, metadataPromise]);
 
     return true;
   } catch (e) {
