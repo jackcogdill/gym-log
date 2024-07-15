@@ -75,7 +75,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>{exercise}</h1>
       <Form
         noValidate
@@ -127,7 +127,6 @@ export default function Page({ params }: { params: { exercise: string } }) {
         striped
         bordered
         hover
-        responsive
         style={{
           wordBreak: "break-all", // prevent overflow
         }}
