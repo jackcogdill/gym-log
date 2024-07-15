@@ -6,6 +6,7 @@
 - [x] Add flat db table for all exercise logs
 - [x] Add note per exercise
 - [x] Integrate search + db
+- [x] Fuzzy search
 - [ ] Add exercise history table
 - [ ] Productionize
   - [ ] Create separate test/prod configs with different DBs

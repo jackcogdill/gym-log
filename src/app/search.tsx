@@ -3,10 +3,17 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Link from "next/link";
+import { HighlightRanges } from "@nozbe/microfuzz";
 import { getExerciseNames } from "../lib/db";
 import { useAuth } from "../lib/context/auth";
+import { useFuzzySearchList, Highlight } from "@nozbe/microfuzz/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+
+interface SearchResult {
+  item: string;
+  highlightRanges: HighlightRanges | null;
+}
 
 export default function Search() {
   const { user } = useAuth();
@@ -30,18 +37,28 @@ export default function Search() {
     router.push(`/exercises/${query}`);
   };
 
-  // TODO: fuzzy search
-  const items = [];
-  for (const exercise of exercises) {
-    items.push(
-      <Dropdown.Item as={Link} href={`/exercises/${exercise}`} key={exercise}>
-        {exercise}
-      </Dropdown.Item>,
-    );
-  }
+  const filteredExercises: SearchResult[] = useFuzzySearchList({
+    list: exercises,
+    queryText: query,
+    mapResultItem: ({ item, matches: [highlightRanges] }) => ({
+      item,
+      highlightRanges,
+    }),
+  });
+
+  const results = filteredExercises.map(({ item, highlightRanges }) => (
+    <Dropdown.Item as={Link} href={`/exercises/${item}`} key={item}>
+      <Highlight
+        text={item}
+        ranges={highlightRanges}
+        className={"text-bg-primary"}
+      />
+    </Dropdown.Item>
+  ));
+
   if (query && !exercises.includes(query)) {
-    items.push(<Dropdown.Divider key={"__divider"} />);
-    items.push(
+    results.push(<Dropdown.Divider key={"__divider"} />);
+    results.push(
       <Dropdown.Item as={Link} href={`/exercises/${query}`} key={query}>
         {`＋ ${query}`}
       </Dropdown.Item>,
@@ -58,7 +75,7 @@ export default function Search() {
         onChange={onChange}
       />
       <Dropdown show={showDropdown}>
-        <Dropdown.Menu className="w-100 mt-2">{items}</Dropdown.Menu>
+        <Dropdown.Menu className="w-100 mt-2">{results}</Dropdown.Menu>
       </Dropdown>
     </Form>
   );
