@@ -1,4 +1,5 @@
 import "./styles.scss";
+import Analytics from "./analytics";
 import Protected from "./protected";
 import type { Metadata } from "next";
 import { AuthProvider } from "../lib/context/auth";
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en" className="h-100">
       <body className="h-100">
         <script dangerouslySetInnerHTML={{ __html: themeScript }}></script>
+        <Analytics />
         <AuthProvider>
           <main className="h-100 container py-4">
             <Protected>{children}</Protected>
