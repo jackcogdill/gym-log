@@ -76,7 +76,6 @@ export default function Search() {
       <Form.Control
         type="text"
         size="lg"
-        htmlSize={28}
         placeholder="Exercise"
         onChange={onChange}
       />

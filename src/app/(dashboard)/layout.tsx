@@ -10,7 +10,7 @@ export default function DashboardLayout({
       <div className="mb-5">
         <Header />
       </div>
-      <div className="d-flex align-items-center justify-content-center">
+      <div className="container" style={{ maxWidth: "600px" }}>
         {children}
       </div>
     </>
