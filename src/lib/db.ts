@@ -8,10 +8,15 @@ import {
   collection,
   doc,
   getDoc,
+  onSnapshot,
+  query,
   setDoc,
+  where,
+  Unsubscribe,
+  QuerySnapshot,
 } from 'firebase/firestore';
 
-interface ExerciseLog {
+export interface ExerciseLog {
   exercise: string;
   weight: number;
   sets: number[];
@@ -48,4 +53,14 @@ export async function getExerciseNames(user: User): Promise<string[]> {
   const metadata = doc(db, 'users', user.uid, 'metadata', 'exercises');
   const snapshot = await getDoc(metadata);
   return snapshot.exists() ? snapshot.data().names : [];
+}
+
+export function subscribeExercise(
+  user: User,
+  name: string,
+  onNext: (snapshot: QuerySnapshot) => void,
+): Unsubscribe {
+  const exercises = collection(db, 'users', user.uid, 'exercises');
+  const q = query(exercises, where('exercise', '==', name));
+  return onSnapshot(q, onNext);
 }

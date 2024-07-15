@@ -2,8 +2,13 @@
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
-import { logExercise } from "../../../../lib/db";
+import Table from "react-bootstrap/Table";
+import { useEffect, useState } from "react";
+import {
+  logExercise,
+  subscribeExercise,
+  ExerciseLog,
+} from "../../../../lib/db";
 import { useAuth } from "../../../../lib/context/auth";
 
 const createSet = () => ({ id: Date.now(), value: "" });
@@ -14,6 +19,19 @@ export default function Page({ params }: { params: { exercise: string } }) {
   const [sets, setSets] = useState([createSet()]);
   const [note, setNote] = useState("");
   const [validated, setValidated] = useState(false);
+  const [history, setHistory] = useState<ExerciseLog[]>([]);
+
+  useEffect(() => {
+    return subscribeExercise(user!, params.exercise, (snapshot) => {
+      const newHistory: ExerciseLog[] = [];
+      snapshot.forEach((doc) => {
+        if (!doc.exists()) return;
+        newHistory.push(doc.data() as ExerciseLog);
+      });
+      newHistory.sort((a, b) => b.timestamp - a.timestamp); // descending
+      setHistory(newHistory);
+    });
+  }, []);
 
   const onChangeSet = (index: number, value: string) => {
     const newSets = [...sets];
@@ -58,7 +76,12 @@ export default function Page({ params }: { params: { exercise: string } }) {
   return (
     <div>
       <h1>{params.exercise}</h1>
-      <Form noValidate validated={validated} onSubmit={onSubmit}>
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={onSubmit}
+        className="mb-5"
+      >
         <Form.Group className="mb-3">
           <Form.Label>Weight</Form.Label>
           <Form.Control
@@ -98,6 +121,40 @@ export default function Page({ params }: { params: { exercise: string } }) {
           Log
         </Button>
       </Form>
+      <h2>History</h2>
+      <Table
+        striped
+        bordered
+        hover
+        responsive
+        style={{
+          wordBreak: "break-all", // prevent overflow
+        }}
+      >
+        <thead>
+          <tr>
+            <th>Weight</th>
+            <th>Sets</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {history.map((log) => (
+            <>
+              <tr key={log.timestamp}>
+                <td>{log.weight}</td>
+                <td>{log.sets.join(" ")}</td>
+                <td>{new Date(log.timestamp).toDateString()}</td>
+              </tr>
+              {log.note && (
+                <tr key={log.timestamp + "_note"}>
+                  <td colSpan={3}>{log.note}</td>
+                </tr>
+              )}
+            </>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 }
