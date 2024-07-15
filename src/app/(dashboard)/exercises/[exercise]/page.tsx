@@ -2,6 +2,7 @@
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import React from "react";
 import Table from "react-bootstrap/Table";
 import { useEffect, useState } from "react";
 import {
@@ -140,18 +141,18 @@ export default function Page({ params }: { params: { exercise: string } }) {
         </thead>
         <tbody>
           {history.map((log) => (
-            <>
-              <tr key={log.timestamp}>
+            <React.Fragment key={log.timestamp}>
+              <tr key={`${log.timestamp}-row`}>
                 <td>{log.weight}</td>
                 <td>{log.sets.join(" ")}</td>
                 <td>{new Date(log.timestamp).toDateString()}</td>
               </tr>
               {log.note && (
-                <tr key={log.timestamp + "_"}>
+                <tr key={`${log.timestamp}-note`}>
                   <td colSpan={3}>{log.note}</td>
                 </tr>
               )}
-            </>
+            </React.Fragment>
           ))}
         </tbody>
       </Table>
