@@ -57,7 +57,9 @@ export default function Search() {
   ));
 
   if (query && !exercises.includes(query)) {
-    results.push(<Dropdown.Divider key={"__divider"} />);
+    if (results.length > 0) {
+      results.push(<Dropdown.Divider key={"__divider"} />);
+    }
     results.push(
       <Dropdown.Item as={Link} href={`/exercises/${query}`} key={query}>
         {`＋ ${query}`}
