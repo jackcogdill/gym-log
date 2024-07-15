@@ -12,7 +12,6 @@
 - [x] Add firebase analytics
 - [ ] Productionize
   - [ ] Create separate test/prod configs with different DBs
-- [ ] Add import from Google sheets
 
 ### backlog
 
