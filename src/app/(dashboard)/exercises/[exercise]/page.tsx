@@ -14,6 +14,7 @@ import { useAuth } from "../../../../lib/context/auth";
 const createSet = () => ({ id: Date.now(), value: "" });
 
 export default function Page({ params }: { params: { exercise: string } }) {
+  const exercise = decodeURIComponent(params.exercise);
   const { user } = useAuth();
   const [weight, setWeight] = useState("");
   const [sets, setSets] = useState([createSet()]);
@@ -22,7 +23,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
   const [history, setHistory] = useState<ExerciseLog[]>([]);
 
   useEffect(() => {
-    return subscribeExercise(user!, params.exercise, (snapshot) => {
+    return subscribeExercise(user!, exercise, (snapshot) => {
       const newHistory: ExerciseLog[] = [];
       snapshot.forEach((doc) => {
         if (!doc.exists()) return;
@@ -58,7 +59,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
     if (!valid) return;
 
     const success = await logExercise(user!, {
-      exercise: params.exercise,
+      exercise,
       weight: parsedWeight,
       sets: parsedSets,
       note,
@@ -75,7 +76,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
 
   return (
     <div>
-      <h1>{params.exercise}</h1>
+      <h1>{exercise}</h1>
       <Form
         noValidate
         validated={validated}

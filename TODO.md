@@ -8,8 +8,7 @@
 - [x] Integrate search + db
 - [x] Fuzzy search
 - [x] Add exercise history table
-- [ ] Make exercises title case (or separate display name)
-- [ ] Handle exercise names with punctuation
+- [x] Handle exercise names with punctuation
 - [ ] Productionize
   - [ ] Create separate test/prod configs with different DBs
 - [ ] Add import from Google sheets

@@ -15,6 +15,10 @@ interface SearchResult {
   highlightRanges: HighlightRanges | null;
 }
 
+function createHref(query: string) {
+  return `/exercises/${encodeURIComponent(query)}`;
+}
+
 export default function Search() {
   const { user } = useAuth();
   const router = useRouter();
@@ -34,7 +38,7 @@ export default function Search() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/exercises/${query}`);
+    router.push(createHref(query));
   };
 
   const filteredExercises: SearchResult[] = useFuzzySearchList({
@@ -47,7 +51,7 @@ export default function Search() {
   });
 
   const results = filteredExercises.map(({ item, highlightRanges }) => (
-    <Dropdown.Item as={Link} href={`/exercises/${item}`} key={item}>
+    <Dropdown.Item as={Link} href={createHref(item)} key={item}>
       <Highlight
         text={item}
         ranges={highlightRanges}
@@ -61,7 +65,7 @@ export default function Search() {
       results.push(<Dropdown.Divider key={"__divider"} />);
     }
     results.push(
-      <Dropdown.Item as={Link} href={`/exercises/${query}`} key={query}>
+      <Dropdown.Item as={Link} href={createHref(query)} key={query}>
         {`＋ ${query}`}
       </Dropdown.Item>,
     );
