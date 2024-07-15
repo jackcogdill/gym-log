@@ -9,13 +9,13 @@
 - [x] Fuzzy search
 - [x] Add exercise history table
 - [x] Handle exercise names with punctuation
+- [x] Add firebase analytics
 - [ ] Productionize
   - [ ] Create separate test/prod configs with different DBs
 - [ ] Add import from Google sheets
 
 ### backlog
 
-- [ ] Add firebase analytics
 - [ ] Add GitHub inspired calendar view of exercise frequency
   - [ ] Dashboard (combined)
   - [ ] Individual exercises

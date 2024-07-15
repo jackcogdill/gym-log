@@ -148,7 +148,7 @@ export default function Page({ params }: { params: { exercise: string } }) {
                 <td>{new Date(log.timestamp).toDateString()}</td>
               </tr>
               {log.note && (
-                <tr key={log.timestamp + "_note"}>
+                <tr key={log.timestamp + "_"}>
                   <td colSpan={3}>{log.note}</td>
                 </tr>
               )}
