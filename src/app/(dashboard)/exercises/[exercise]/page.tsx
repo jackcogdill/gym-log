@@ -128,8 +128,9 @@ export default function Page({ params }: { params: { exercise: string } }) {
         striped
         bordered
         hover
+        responsive
         style={{
-          wordBreak: "break-all", // prevent overflow
+          whiteSpace: "nowrap",
         }}
       >
         <thead>
@@ -137,22 +138,17 @@ export default function Page({ params }: { params: { exercise: string } }) {
             <th>Weight</th>
             <th>Sets</th>
             <th>Date</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody>
           {history.map((log) => (
-            <React.Fragment key={log.timestamp}>
-              <tr key={`${log.timestamp}-row`}>
-                <td>{log.weight}</td>
-                <td>{log.sets.join(" ")}</td>
-                <td>{new Date(log.timestamp).toDateString()}</td>
-              </tr>
-              {log.note && (
-                <tr key={`${log.timestamp}-note`}>
-                  <td colSpan={3}>{log.note}</td>
-                </tr>
-              )}
-            </React.Fragment>
+            <tr key={log.timestamp}>
+              <td>{log.weight}</td>
+              <td>{log.sets.join(" ")}</td>
+              <td>{new Date(log.timestamp).toDateString()}</td>
+              <td>{log.note}</td>
+            </tr>
           ))}
         </tbody>
       </Table>
