@@ -13,7 +13,9 @@ const app = initializeApp({
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db = process.env.NEXT_PUBLIC_DATABASE_ID
+  ? getFirestore(app, process.env.NEXT_PUBLIC_DATABASE_ID)
+  : getFirestore(app);
 
 export function initAnalytics() {
   getAnalytics(app);
