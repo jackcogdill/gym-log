@@ -6,7 +6,7 @@ env:
     secret: projects/309428000259/secrets/NEXT_PUBLIC_FIREBASE_API_KEY
 
   - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-    secret: projects/309428000259/secrets/NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN/versions/1
+    secret: projects/309428000259/secrets/NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
 
   - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
     secret: projects/309428000259/secrets/NEXT_PUBLIC_FIREBASE_PROJECT_ID
