@@ -18,4 +18,4 @@
 
 - [ ] Add GitHub inspired calendar view of exercise frequency
   - [ ] Dashboard (combined)
-  - [ ] Individual exercises
+- [ ] Add graph(s) on exercise page
