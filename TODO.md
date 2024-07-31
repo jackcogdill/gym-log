@@ -10,8 +10,9 @@
 - [x] Add exercise history table
 - [x] Handle exercise names with punctuation
 - [x] Add firebase analytics
-- [ ] Productionize
-  - [ ] Create separate test/prod configs with different DBs
+- [x] Productionize
+  - [x] Create separate test/prod configs with different DBs
+- [x] Add home button
 
 ### backlog
 
