@@ -55,7 +55,7 @@ export default function Search() {
       <Highlight
         text={item}
         ranges={highlightRanges}
-        className={"text-bg-primary"}
+        className={"bg-primary-subtle"}
       />
     </Dropdown.Item>
   ));
